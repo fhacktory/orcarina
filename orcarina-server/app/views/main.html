@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+    </head>
+    <body>
+        #{doLayout /}
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>React Local</title>
+        <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+        <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        #{get 'moreScripts' /}
+    </body>
+</html>

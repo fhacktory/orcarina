@@ -1,10 +1,134 @@
 #{extends 'main.html' /}
 #{set title:'Orcanica' /}
 
-<div id="root">
-    Messages sent: ${messagesSent}
+<style>
+    .btn-container {
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: center;
+        margin-top: 10px;;
+    }
+    .btn-volume {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 48px;
+        background-image: url('public/images/background.gif');
+        background-repeat: repeat-x;
+        background-position: 0 40px;
+       background-color: transparent;
+    }
+    .btn-volume[value="1"]{
+        background-position: 0 75px;
+    }
+    .btn-volume[value="2"]{
+        background-position: 0 50px;
+    }
+    .btn-volume[value="3"]{
+        background-position: 0 25px;
+    }
+    .btn-volume[value="4"]{
+        background-position: 0 0;
+    }
+    #sequenceContainer {
+        text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+    }
+    .user-score {
+        text-align: center;
+        font-weight: 300;
+    }
+    .user-score-label{
+        color: #FFFFFF;
 
+        /*
+        text-shadow: 2px 2px 0px #333333, 5px 4px 0px rgba(0,0,0,0.15);
+        */
+    }
+    .user-score-value {
+        color: white;
+    }
+</style>
+
+<h1><span class="Message">Orcarina</span></h1>
+
+<div style="text-align: center;height: 40px;">
+    <span id="sequenceContainer" style="font-size: 36px;color: white;vertical-align: bottom;"></span>
+    <span class="spinner-grow loader" role="status" style="margin-left: 20px;"></span>
 </div>
-<div>
-    Cache: ${cache}
+
+<div class="btn-container">
+    <input class="btn btn-primary btn-block btn-volume" type="button" value="1">
+    <input class="btn btn-primary btn-block btn-volume" type="button" value="2">
+    <input class="btn btn-primary btn-block btn-volume" type="button" value="3">
+    <input class="btn btn-primary btn-block btn-volume" type="button" value="4">
 </div>
+
+
+<div class="user-score" style="font-size: 32px;"> <span class="user-score-label">Score:</span> <span class="user-score-value odometer"></span> </div>
+
+<div id="orca-notes" style="color: white;">
+</div>
+
+
+
+<script>
+    var sequence = [];
+
+    var userScore = 0;
+
+    var updateSequenceUI = function(){
+        var str = sequence.join('-');
+        $("#sequenceContainer").html(str);
+    };
+
+    var updateUserScore = function(){
+        $(".user-score-value").html(userScore);
+    };
+    updateUserScore();
+
+    $(".btn-volume").on("click", function(event){
+        var target = $(event.target);
+        var value = target.val();
+        sequence.push("" + value);
+        updateSequenceUI();
+        // after typing a new sequence, hide the loader
+        $(".loader").hide();
+        if (sequence.length == 4){
+            $(".loader").show();
+            // cacher la séquence
+            setTimeout(function(){
+                updateSequenceUI();
+                $(".loader").hide();
+            }, 2000);
+            var userSequence = sequence.join("");
+            $.ajax({
+                url : '/orcarina/Application/getMessages',
+                type : 'GET',
+                dataType : 'text',
+                success : function(response){
+                    var allNotes = response.split(";").reverse().join("");
+                    $("#orca-notes").text("Orca notes: " + allNotes + ", User notes: " + userSequence);
+                    var $loader = $(".loader");
+                    $loader.removeClass("text-success text-danger");
+                    if (allNotes.indexOf(userSequence) != -1){
+                        userScore += 1;
+                        updateUserScore();
+                        $loader.addClass("text-success");
+                    } else {
+                        $loader.addClass("text-danger");
+                    }
+                    $("#cache").text(response);
+                }
+            });
+            sequence = [];
+        }
+    });
+
+    $(".loader").hide();
+    if (window.location.href.indexOf("localhost") == -1){
+        $("#orca-notes").hide();
+    }
+</script>

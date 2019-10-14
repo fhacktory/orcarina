@@ -48,6 +48,8 @@
   */
 
   /*
+    private boolean pause = false;
+    final Object    sync = new Object();
       final OSCServer c;
       try {
         c = OSCServer.newUsing(OSCServer.TCP, 49162, false );

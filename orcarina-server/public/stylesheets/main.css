@@ -1,0 +1,27 @@
+body, html {
+@import url('https://fonts.googleapis.com/css?family=B612+Mono&display=swap');
+    font-family: 'B612 Mono', monospace;
+    background: linear-gradient(#e66465, #9198e5);
+    background-size: 40px 40px;
+    background-image: radial-gradient(circle, #444 1px, #111 1px);
+    font-size: 24px;
+    height: 100%;
+}
+
+.Message {
+    flex: 1;
+    text-align: center;
+    background: linear-gradient(to right, #ffffff 0%, #0000ff 10%, #00ff00 20%, #FF0 30%, #FFF 100%);
+    background-size: 200% auto;
+    color: #000;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+}
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}

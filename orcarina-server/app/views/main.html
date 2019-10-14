@@ -2,20 +2,31 @@
 
 <html>
     <head>
-        <title>#{get 'title' /}</title>
-        <meta charset="${_response_encoding}">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-    </head>
-    <body>
-        #{doLayout /}
-
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title></title>
+        <title>#{get 'title' /}</title>
+        <script src="/orcarina/public/javascripts/jquery-1.12.4.min.js" type="text/javascript"></script>
+        <script src="/orcarina/public/javascripts/bootstrap.min.js" type="text/javascript"></script>
+
+        <link rel="stylesheet" href="/orcarina/public/stylesheets/main.css" />
+        <link rel="stylesheet" href="/orcarina/public/stylesheets/bootstrap.min.css" />
+
+        <script src="/orcarina/public/javascripts/odometer.min.js" type="text/javascript"></script>
+        <!-- https://github.hubspot.com/odometer/api/themes/ -->
+        <!--
+        <link rel="stylesheet" href="/orcarina/public/stylesheets/odometer-theme-train-station.css" />
+        <link rel="stylesheet" href="/orcarina/public/stylesheets/odometer-theme-car.css" />
+        <link rel="stylesheet" href="/orcarina/public/stylesheets/odometer-theme-digital.css" />
+        <link rel="stylesheet" href="/orcarina/public/stylesheets/odometer-theme-plaza.css" />
+        -->
+        <link rel="stylesheet" href="/orcarina/public/stylesheets/odometer-theme-default.css" />
 
         #{get 'moreScripts' /}
+    </head>
+    <body>
+        <div class="container" style="padding-top: 30px;">
+            #{doLayout /}
+        </div>
     </body>
 </html>

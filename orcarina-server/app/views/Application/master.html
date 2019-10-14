@@ -1,0 +1,19 @@
+#{extends 'main.html' /}
+#{set title:'Orcanica master' /}
+
+<div style="color: white;">
+    Cache: <span id="cache">${cache}</span>
+</div>
+<script>
+    var getCache = function(){
+        $.ajax({
+            url : '/orcarina/Application/getMessages',
+            type : 'GET',
+            dataType : 'text',
+            success : function(response){
+                $("#cache").text(response);
+            }
+        });
+    };
+    var cacheInterval = setInterval(getCache, 0.3 * 1000);
+</script>
